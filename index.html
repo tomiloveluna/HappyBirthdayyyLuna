@@ -1,0 +1,754 @@
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fef0f7;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+
+
+        .page {
+            text-align: center;
+            margin-bottom: 50px;
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #444;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #e889aa;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0;
+            display: inline;
+        }
+
+        .emoji {
+            font-size: 48px;
+            margin-left: 10px;
+            color: #444;
+        }
+
+        .instruction {
+            color: #6d7e96;
+            font-size: 18px;
+            margin: 30px 0;
+            font-weight: 500;
+        }
+
+        .next-btn {
+            background: #e889aa;
+            color: white;
+            border: none;
+            padding: 15px 60px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 137, 170, 0.3);
+        }
+
+        .next-btn:hover {
+            background: #d577a0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 137, 170, 0.4);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Page 2 styles */
+        .envelope-img, .crying-img, .header-img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        
+        .crying-img {
+            margin-top: 20px;
+        }
+        
+        .header-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 5px solid white;
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .header-img:hover {
+            transform: rotate(3deg);
+        }
+
+        .question-text {
+            font-size: 24px;
+            color: #444;
+            margin: 20px 0 40px 0;
+            font-weight: 500;
+        }
+        
+        .plea-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #444;
+            margin: 5px 0;
+            line-height: 1.2;
+        }
+        
+        .plea-subtitle {
+            font-size: 32px;
+            font-weight: bold;
+            color: #444;
+            margin: 5px 0 40px 0;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .choice-btn {
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .open-btn {
+            background: #e889aa;
+            color: white;
+            box-shadow: 0 4px 15px rgba(232, 137, 170, 0.3);
+        }
+
+        .open-btn:hover {
+            background: #d577a0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 137, 170, 0.4);
+        }
+
+        .no-btn {
+            background: #7dd3c0;
+            color: white;
+            box-shadow: 0 4px 15px rgba(125, 211, 192, 0.3);
+        }
+
+        .no-btn:hover {
+            background: #6bc4b0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(125, 211, 192, 0.4);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter-container {
+            background: #fff;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .letter-header {
+            background: #ffd6e4;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ffc0d5;
+        }
+
+        .letter-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #7a4b73;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #7a4b73;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #ffbcd5;
+        }
+
+        .letter-content {
+            padding: 30px;
+            background-color: #ffebf2; /* 备用背景色 */
+            background-image: url('rjonvzwh90.png');
+            background-size: 100% 100%;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .letter-greeting {
+            font-size: 24px;
+            font-weight: bold;
+            color: #7a4b73;
+            margin-bottom: 30px;
+            margin-top: 60px;
+            font-style: italic;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        .letter-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #7a4b73;
+            margin-bottom: 20px;
+            text-align: left;
+            font-style: italic;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+            padding: 0 20px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            font-style: italic;
+            color: #7a4b73;
+            margin-top: 40px;
+            padding-right: 20px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+        }
+        
+        [contenteditable="true"]:focus {
+            outline: 2px dashed rgba(255, 150, 180, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        .letter-actions {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 32px;
+            }
+            
+            .subtitle {
+                font-size: 32px;
+            }
+            
+            .emoji {
+                font-size: 32px;
+            }
+            
+            .header-img {
+                width: 150px;
+                height: 150px;
+                border-radius: 12px;
+            }
+            
+            .instruction {
+                font-size: 16px;
+                margin: 20px 0;
+            }
+            
+            .next-btn {
+                padding: 12px 40px;
+                font-size: 16px;
+            }
+            
+            .envelope-img, .crying-img {
+                max-width: 250px;
+            }
+            
+            .question-text {
+                font-size: 20px;
+                margin: 15px 0 30px 0;
+            }
+            
+            .plea-title {
+                font-size: 28px;
+            }
+            
+            .plea-subtitle {
+                font-size: 24px;
+            }
+            
+            .choice-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .letter-container {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .letter-content {
+                padding: 20px;
+            }
+            
+            .letter-greeting {
+                font-size: 20px;
+                margin-top: 40px;
+            }
+            
+            .letter-text {
+                font-size: 14px;
+                padding: 0 10px;
+            }
+            
+            .letter-signature {
+                padding-right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 28px;
+            }
+            
+            .emoji {
+                font-size: 28px;
+            }
+            
+            .header-img {
+                width: 120px;
+                height: 120px;
+                border-radius: 10px;
+            }
+            
+            .instruction {
+                font-size: 14px;
+            }
+            
+            .plea-title {
+                font-size: 24px;
+            }
+            
+            .plea-subtitle {
+                font-size: 20px;
+            }
+            
+            .envelope-img, .crying-img {
+                max-width: 200px;
+            }
+            
+            .letter-container {
+                width: 98%;
+            }
+            
+            .letter-content {
+                padding: 15px;
+            }
+            
+            .letter-greeting {
+                font-size: 18px;
+            }
+            
+            .letter-text {
+                font-size: 13px;
+            }
+        }
+        
+        /* 音乐控制器样式 */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(232, 137, 170, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(232, 137, 170, 0.3);
+        }
+        
+        .music-control:hover {
+            background: rgba(213, 119, 160, 0.9);
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .music-control {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="bgmusic.mp3" type="audio/mp3
+    </audio>
+    
+    <!-- 点击音效 -->
+    <audio id="clickSound">
+        <source src="2568.wav" type="audio/wav">
+    </audio>
+    
+    <!-- 音乐控制按钮 -->
+    <button class="music-control" id="musicToggle" onclick="toggleMusic()">🎵</button>
+    
+    <!-- Page 1: Birthday greeting -->
+    <div class="page active" id="page1">
+        <img src="d4enwza2ob.jpg" alt="Birthday character" class="header-img">
+        <h1 class="title">Happy Birthday</h1>
+        <h1 class="subtitle">my baby!</h1>
+        <span class="emoji">(｡◕‿◕｡)</span>
+        
+        <p class="instruction">Click the next button!! (つ◕v◕)つ♡</p>
+        
+        <button class="next-btn" onclick="showPage2()">Next!! ♪～♪</button>
+    </div>
+
+    <!-- Page 2: Envelope question -->
+    <div class="page" id="page2">
+        <img src="lhwhk0jmgr.jpg" alt="Pink envelope" class="envelope-img">
+        
+        <p class="question-text">Do you want to open it? "ヾ(＂•̀_•́＂)ノ＂</p>
+        
+        <div class="button-container">
+            <button class="choice-btn open-btn" onclick="openEnvelope()">Open it</button>
+            <button class="choice-btn no-btn" onclick="sayNo()">No ty</button>
+        </div>
+    </div>
+
+    <!-- Letter Modal -->
+    <div class="modal" id="letterModal">
+        <div class="letter-container">
+            <div class="letter-header">
+                <h3 class="letter-title">Ooo.. A message (ﾉ◕o◕)ﾉ♡ !!</h3>
+                <button class="close-btn" onclick="closeLetter()">×</button>
+            </div>
+            <div class="letter-content">
+                <div class="letter-greeting" contenteditable="true">Happy Birthday, LUNAAA(^ᴗ^)</div>
+                
+                <div class="letter-text" contenteditable="true">
+                    HAPPY BIRTHDAYYYY, pookieee🎉🥳💖Hope you're having the best day ever, and if not, then let this message be a little comforting because you seriously deserve all the good vibes today (and every day tbh).
+                </div>
+                
+                <div class="letter-text" contenteditable="true">
+                    Just wanted to say: you're genuinely such a cool person I’ve ever met. Like fr, you're funny, kind, super chill to be around, and somehow always manage to bring positive energy wherever you go. It’s lowkey impressive how effortlessly you make people feel at ease.
+                </div>
+                
+                <div class="letter-text" contenteditable="true">
+                    Okay, this might sound a bit awkward, but sometimes you really catch me off guard. You’re just being yourself, and I find myself thinking about it more than I probably should. It’s kind of surprising how much you can brighten a day without even trying. Honestly, it’s a little anxious how much of an impact you have, but in the best way. I guess I’m still figuring out how to say all this without sounding too weird xD.
+                </div>
+                
+                <div class="letter-text" contenteditable="true">
+                    Anyway, I really hope this next year hits differently,  in the best way possible. Like, I hope you get all the things you’ve been hoping for. More laughs(def w/me), more wins(def w/me), more peace(def w/me), more dumb late-night convos(def w/me), more everything.I hope this next year brings you more moments to feel proud of yourself, more rest when you need it, and more of the little things that make life feel right.
+                </div>
+                
+                <div class="letter-text" contenteditable="true">
+                    Happy Birthday, my heart. I love you endlessly. ❤️
+                </div>
+                
+                <div class="letter-signature" contenteditable="true">
+                    Your forever<br>
+                    ♡
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Please try again -->
+    <div class="page" id="page3">
+        <img src="mhdk5h7anz.jpg" alt="Crying character" class="crying-img">
+        
+        <h2 class="plea-title">Awh.. Let's try again?</h2>
+        <h2 class="plea-subtitle">PLEASEE?</h2>
+        
+        <div class="button-container">
+            <button class="choice-btn open-btn" onclick="tryAgain()">Again..?</button>
+        </div>
+    </div>
+
+    <script>
+        // 预加载图片
+        window.addEventListener('DOMContentLoaded', function() {
+            const imagesToPreload = [
+                '9yy3sxblhj.png',
+                'lhwhk0jmgr.jpg',
+                'rjonvzwh90.png', 
+                'mhdk5h7anz.jpg',
+                'd4enwza2ob.jpg'
+            ];
+            
+            // 预加载音频文件
+            const audioToPreload = [
+                'xoa0x82ghj.mp3',
+                '2568.wav'
+            ];
+            
+            imagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+        
+        function showPage2() {
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
+        }
+
+        function openEnvelope() {
+            document.getElementById('letterModal').classList.add('active');
+        }
+
+        function closeLetter() {
+            document.getElementById('letterModal').classList.remove('active');
+        }
+
+        function sayNo() {
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+        }
+        
+        function finalNo() {
+            alert('Okay, I understand... maybe next time! 🥺');
+            document.getElementById('page3').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        }
+        
+        // 背景音乐控制
+        let isMusicPlaying = false;
+        
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const musicBtn = document.getElementById('musicToggle');
+            
+            // 播放点击音效
+            playClickSound();
+            
+            if (isMusicPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '🎵';
+                isMusicPlaying = false;
+            } else {
+                music.play().catch(e => {
+                    // 自动播放可能被浏览器阻止
+                    console.log('音乐自动播放被阻止，请点击屏幕后再试');
+                });
+                musicBtn.innerHTML = '🔇';
+                isMusicPlaying = true;
+            }
+        }
+        
+        // 点击音效函数
+        function playClickSound() {
+            const clickSound = document.getElementById('clickSound');
+            clickSound.currentTime = 0; // 重置音频到开头
+            clickSound.play().catch(e => {
+                // 忽略错误
+                console.log('点击音效播放失败');
+            });
+        }
+        
+        // 处理交互开始时自动播放音乐
+        document.addEventListener('click', function() {
+            if (!isMusicPlaying) {
+                // 只在第一次点击时尝试播放音乐
+                const music = document.getElementById('bgMusic');
+                music.play().catch(e => {
+                    // 忽略错误
+                });
+                document.getElementById('musicToggle').innerHTML = '🔇';
+                isMusicPlaying = true;
+            }
+        }, { once: true });
+        
+        // 为所有按钮添加点击音效
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有按钮
+            const buttons = document.querySelectorAll('button, .choice-btn, .next-btn, .save-btn, .music-control');
+            
+            // 为每个按钮添加点击事件监听器
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    playClickSound();
+                });
+            });
+            
+            // 为可编辑的文本区域添加点击事件和自动保存功能
+            const editableElements = document.querySelectorAll('[contenteditable="true"]');
+            editableElements.forEach(element => {
+                // 添加点击音效
+                element.addEventListener('click', function() {
+                    playClickSound();
+                });
+                
+                // 添加输入事件监听，实现自动保存
+                element.addEventListener('input', function() {
+                    // 当内容改变时自动保存
+                    saveLetterContent(false); // false表示不显示提示
+                });
+                
+                // 添加失去焦点事件，确保编辑完成时保存
+                element.addEventListener('blur', function() {
+                    saveLetterContent(false);
+                });
+            });
+        });
+        
+        function tryAgain() {
+            document.getElementById('page3').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        }
+        
+        function saveLetterContent(showAlert = true) {
+            if (showAlert) {
+                alert('Content saved! 💌');
+            }
+            
+            // 这里可以添加保存到本地存储的代码
+            const letterGreeting = document.querySelector('.letter-greeting').innerText;
+            const letterTexts = [...document.querySelectorAll('.letter-text')].map(el => el.innerText);
+            const letterSignature = document.querySelector('.letter-signature').innerHTML;
+            
+            // 保存到localStorage
+            localStorage.setItem('letterContent', JSON.stringify({
+                greeting: letterGreeting,
+                texts: letterTexts,
+                signature: letterSignature
+            }));
+        }
+        
+        // 加载保存的内容
+        function loadSavedContent() {
+            const savedContent = localStorage.getItem('letterContent');
+            
+            if (savedContent) {
+                try {
+                    const content = JSON.parse(savedContent);
+                    
+                    // 恢复内容
+                    document.querySelector('.letter-greeting').innerText = content.greeting;
+                    
+                    const textElements = document.querySelectorAll('.letter-text');
+                    content.texts.forEach((text, index) => {
+                        if (textElements[index]) {
+                            textElements[index].innerText = text;
+                        }
+                    });
+                    
+                    document.querySelector('.letter-signature').innerHTML = content.signature;
+                } catch (e) {
+                    console.error('Failed to load saved content', e);
+                }
+            }
+        }
+
+        // 页面加载时尝试恢复保存的内容
+        window.addEventListener('DOMContentLoaded', loadSavedContent);
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('letterModal');
+            if (event.target === modal) {
+                closeLetter();
+            }
+        }
+    </script>
+</body>
+</html>
