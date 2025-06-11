@@ -476,11 +476,17 @@
 </head>
 <body>
    
-    <audio id="bgMusic" autoplay loop>
+    <audio id="bgMusic" loop>
         <source src="bgmusic.mp3" type="audio/mp3">
     </audio>
     
-    <button class="music-control">🎵</button>
+    <!-- 点击音效 -->
+    <audio id="clickSound">
+        <source src="2568.wav" type="audio/wav">
+    </audio>
+    
+ 
+    <button class="music-control" id="musicToggle" onclick="toggleMusic()">🎵</button>
     
     <!-- Page 1: Birthday greeting -->
     <div class="page active" id="page1">
@@ -606,7 +612,7 @@
         }
         
      
-        let isMusicPlaying = true;
+        let isMusicPlaying = false;
         
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
@@ -618,7 +624,7 @@
             if (isMusicPlaying) {
                 music.pause();
                 musicBtn.innerHTML = '🎵';
-                isMusicPlaying = true;
+                isMusicPlaying = false;
             } else {
                 music.play().catch(e => {
             
