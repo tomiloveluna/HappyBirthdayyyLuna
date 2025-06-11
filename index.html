@@ -639,20 +639,7 @@
             });
         }
         
-     
-        document.addEventListener('click', function() {
-            if (!isMusicPlaying) {
-               
-                const music = document.getElementById('bgMusic');
-                music.play().catch(e => {
-                  
-                });
-                document.getElementById('musicToggle').innerHTML = '🔇';
-                isMusicPlaying = true;
-            }
-        }, { once: true });
-        
-       
+    
         document.addEventListener('DOMContentLoaded', function() {
          
             const buttons = document.querySelectorAll('button, .choice-btn, .next-btn, .save-btn, .music-control');
