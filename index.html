@@ -659,6 +659,57 @@
         }, { once: true });
         
       
+          window.addEventListener('DOMContentLoaded', function() {
+            const imagesToPreload = [
+                '9yy3sxblhj.png',
+                'lhwhk0jmgr.jpg',
+                'rjonvzwh90.png', 
+                'mhdk5h7anz.jpg',
+                'd4enwza2ob.jpg'
+            ];
+            
+           
+            const audioToPreload = [
+                'xoa0x82ghj.mp3',
+                '2568.wav'
+            ];
+            
+            imagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+        
+        function showPage2() {
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
+        }
+
+        function openEnvelope() {
+            document.getElementById('letterModal').classList.add('active');
+        }
+
+        function closeLetter() {
+            document.getElementById('letterModal').classList.remove('active');
+        }
+
+        function sayNo() {
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+        }
+        
+        function finalNo() {
+            alert('Okay, I understand... maybe next time! 🥺');
+            document.getElementById('page3').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        }
+        
+        
+        function tryAgain() {
+            document.getElementById('page3').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+        }
+        
         window.onclick = function(event) {
             const modal = document.getElementById('letterModal');
             if (event.target === modal) {
