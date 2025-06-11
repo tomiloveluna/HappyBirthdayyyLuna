@@ -606,7 +606,7 @@
         }
         
      
-        let isMusicPlaying = false;
+        let isMusicPlaying = true;
         
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
@@ -618,7 +618,7 @@
             if (isMusicPlaying) {
                 music.pause();
                 musicBtn.innerHTML = '🎵';
-                isMusicPlaying = false;
+                isMusicPlaying = true;
             } else {
                 music.play().catch(e => {
             
@@ -639,7 +639,20 @@
             });
         }
         
-    
+     
+        document.addEventListener('click', function() {
+            if (!isMusicPlaying) {
+               
+                const music = document.getElementById('bgMusic');
+                music.play().catch(e => {
+                  
+                });
+                document.getElementById('musicToggle').innerHTML = '🔇';
+                isMusicPlaying = true;
+            }
+        }, { once: true });
+        
+       
         document.addEventListener('DOMContentLoaded', function() {
          
             const buttons = document.querySelectorAll('button, .choice-btn, .next-btn, .save-btn, .music-control');
