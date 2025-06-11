@@ -520,29 +520,29 @@
                 <button class="close-btn" onclick="closeLetter()">×</button>
             </div>
             <div class="letter-content">
-                <div class="letter-greeting" contenteditable="true">Happy Birthday, LUNAAA(^ᴗ^)</div>
+                <div class="letter-greeting">Happy Birthday, LUNAAA(^ᴗ^)</div>
                 
-                <div class="letter-text" contenteditable="true">
-                    Today is all about celebrating you the incredible person who brings so much joy, love, and light into my life. I feel so lucky to call you mine. You've shown me what true love feels like, and every day with you is a beautiful adventure.
+                <div class="letter-text" >
+                    Today is all about celebrating you the incredible person who brings so much joy, love, and light into my life. I feel so lucky to call you mine(not yet). You've shown me what true love feels like, and every day with you is a beautiful adventure.
                 </div>
                 
-                <div class="letter-text" contenteditable="true">
+                <div class="letter-text" >
                     I love everything about you your smile, your laugh, your strength, your kindness. You make me feel safe, supported, and deeply loved. I'm so proud of the person you are and everything you're becoming.
                 </div>
                 
-                <div class="letter-text" contenteditable="true">
+                <div class="letter-text" >
                     I’ve been holding this in for a while, and your special day feels like the right time to say it. Thank you for being you, for simply existing the way you do. I care about you so deeply, and I just hope you might feel the same one day.
                 </div>
                 
-                <div class="letter-text" contenteditable="true">
+                <div class="letter-text" >
                     Here's to another amazing year together more memories, more laughs, and more love. I can't wait to keep growing with you.
                 </div>
                 
-                <div class="letter-text" contenteditable="true">
+                <div class="letter-text" >
                     Happy Birthday, my heart. I love you endlessly. ❤️
                 </div>
                 
-                <div class="letter-signature" contenteditable="true">
+                <div class="letter-signature" >
                     Your forever<br>
                     ♡
                 </div>
@@ -658,90 +658,6 @@
             }
         }, { once: true });
         
-       
-        document.addEventListener('DOMContentLoaded', function() {
-         
-            const buttons = document.querySelectorAll('button, .choice-btn, .next-btn, .save-btn, .music-control');
-            
-         
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    playClickSound();
-                });
-            });
-            
-     
-            const editableElements = document.querySelectorAll('[contenteditable="true"]');
-            editableElements.forEach(element => {
-               
-                element.addEventListener('click', function() {
-                    playClickSound();
-                });
-                
-              
-                element.addEventListener('input', function() {
-                   
-                    saveLetterContent(false);
-                });
-                
-            
-                element.addEventListener('blur', function() {
-                    saveLetterContent(false);
-                });
-            });
-        });
-        
-        function tryAgain() {
-            document.getElementById('page3').classList.remove('active');
-            document.getElementById('page1').classList.add('active');
-        }
-        
-        function saveLetterContent(showAlert = true) {
-            if (showAlert) {
-                alert('Content saved! 💌');
-            }
-            
-          
-            const letterGreeting = document.querySelector('.letter-greeting').innerText;
-            const letterTexts = [...document.querySelectorAll('.letter-text')].map(el => el.innerText);
-            const letterSignature = document.querySelector('.letter-signature').innerHTML;
-            
-       
-            localStorage.setItem('letterContent', JSON.stringify({
-                greeting: letterGreeting,
-                texts: letterTexts,
-                signature: letterSignature
-            }));
-        }
-        
-     
-        function loadSavedContent() {
-            const savedContent = localStorage.getItem('letterContent');
-            
-            if (savedContent) {
-                try {
-                    const content = JSON.parse(savedContent);
-              
-
-                    document.querySelector('.letter-greeting').innerText = content.greeting;
-                    
-                    const textElements = document.querySelectorAll('.letter-text');
-                    content.texts.forEach((text, index) => {
-                        if (textElements[index]) {
-                            textElements[index].innerText = text;
-                        }
-                    });
-                    
-                    document.querySelector('.letter-signature').innerHTML = content.signature;
-                } catch (e) {
-                    console.error('Failed to load saved content', e);
-                }
-            }
-        }
-
-    
-        window.addEventListener('DOMContentLoaded', loadSavedContent);
-
       
         window.onclick = function(event) {
             const modal = document.getElementById('letterModal');
