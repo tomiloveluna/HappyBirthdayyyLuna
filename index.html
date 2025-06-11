@@ -440,7 +440,7 @@
             }
         }
         
-        /* 音乐控制器样式 */
+     
         .music-control {
             position: fixed;
             bottom: 20px;
@@ -475,18 +475,12 @@
     </style>
 </head>
 <body>
-    <!-- 背景音乐 -->
-    <audio id="bgMusic" loop>
-        <source src="bgmusic.mp3" type="audio/mp3
+   
+    <audio id="bgMusic" autoplay loop>
+        <source src="bgmusic.mp3" type="audio/mp3">
     </audio>
     
-    <!-- 点击音效 -->
-    <audio id="clickSound">
-        <source src="2568.wav" type="audio/wav">
-    </audio>
-    
-    <!-- 音乐控制按钮 -->
-    <button class="music-control" id="musicToggle" onclick="toggleMusic()">🎵</button>
+    <button class="music-control">🎵</button>
     
     <!-- Page 1: Birthday greeting -->
     <div class="page active" id="page1">
@@ -523,19 +517,19 @@
                 <div class="letter-greeting" contenteditable="true">Happy Birthday, LUNAAA(^ᴗ^)</div>
                 
                 <div class="letter-text" contenteditable="true">
-                    HAPPY BIRTHDAYYYY, pookieee🎉🥳💖Hope you're having the best day ever, and if not, then let this message be a little comforting because you seriously deserve all the good vibes today (and every day tbh).
+                    Today is all about celebrating you the incredible person who brings so much joy, love, and light into my life. I feel so lucky to call you mine. You've shown me what true love feels like, and every day with you is a beautiful adventure.
                 </div>
                 
                 <div class="letter-text" contenteditable="true">
-                    Just wanted to say: you're genuinely such a cool person I’ve ever met. Like fr, you're funny, kind, super chill to be around, and somehow always manage to bring positive energy wherever you go. It’s lowkey impressive how effortlessly you make people feel at ease.
+                    I love everything about you your smile, your laugh, your strength, your kindness. You make me feel safe, supported, and deeply loved. I'm so proud of the person you are and everything you're becoming.
                 </div>
                 
                 <div class="letter-text" contenteditable="true">
-                    Okay, this might sound a bit awkward, but sometimes you really catch me off guard. You’re just being yourself, and I find myself thinking about it more than I probably should. It’s kind of surprising how much you can brighten a day without even trying. Honestly, it’s a little anxious how much of an impact you have, but in the best way. I guess I’m still figuring out how to say all this without sounding too weird xD.
+                    I’ve been holding this in for a while, and your special day feels like the right time to say it. Thank you for being you, for simply existing the way you do. I care about you so deeply, and I just hope you might feel the same one day.
                 </div>
                 
                 <div class="letter-text" contenteditable="true">
-                    Anyway, I really hope this next year hits differently,  in the best way possible. Like, I hope you get all the things you’ve been hoping for. More laughs(def w/me), more wins(def w/me), more peace(def w/me), more dumb late-night convos(def w/me), more everything.I hope this next year brings you more moments to feel proud of yourself, more rest when you need it, and more of the little things that make life feel right.
+                    Here's to another amazing year together more memories, more laughs, and more love. I can't wait to keep growing with you.
                 </div>
                 
                 <div class="letter-text" contenteditable="true">
@@ -552,7 +546,7 @@
         </div>
     </div>
 
-    <!-- Page 3: Please try again -->
+
     <div class="page" id="page3">
         <img src="mhdk5h7anz.jpg" alt="Crying character" class="crying-img">
         
@@ -565,7 +559,7 @@
     </div>
 
     <script>
-        // 预加载图片
+       
         window.addEventListener('DOMContentLoaded', function() {
             const imagesToPreload = [
                 '9yy3sxblhj.png',
@@ -575,7 +569,7 @@
                 'd4enwza2ob.jpg'
             ];
             
-            // 预加载音频文件
+           
             const audioToPreload = [
                 'xoa0x82ghj.mp3',
                 '2568.wav'
@@ -611,14 +605,14 @@
             document.getElementById('page1').classList.add('active');
         }
         
-        // 背景音乐控制
+     
         let isMusicPlaying = false;
         
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
             const musicBtn = document.getElementById('musicToggle');
             
-            // 播放点击音效
+           
             playClickSound();
             
             if (isMusicPlaying) {
@@ -627,7 +621,7 @@
                 isMusicPlaying = false;
             } else {
                 music.play().catch(e => {
-                    // 自动播放可能被浏览器阻止
+            
                     console.log('音乐自动播放被阻止，请点击屏幕后再试');
                 });
                 musicBtn.innerHTML = '🔇';
@@ -635,56 +629,56 @@
             }
         }
         
-        // 点击音效函数
+    
         function playClickSound() {
             const clickSound = document.getElementById('clickSound');
-            clickSound.currentTime = 0; // 重置音频到开头
+            clickSound.currentTime = 0; 
             clickSound.play().catch(e => {
-                // 忽略错误
+            
                 console.log('点击音效播放失败');
             });
         }
         
-        // 处理交互开始时自动播放音乐
+     
         document.addEventListener('click', function() {
             if (!isMusicPlaying) {
-                // 只在第一次点击时尝试播放音乐
+               
                 const music = document.getElementById('bgMusic');
                 music.play().catch(e => {
-                    // 忽略错误
+                  
                 });
                 document.getElementById('musicToggle').innerHTML = '🔇';
                 isMusicPlaying = true;
             }
         }, { once: true });
         
-        // 为所有按钮添加点击音效
+       
         document.addEventListener('DOMContentLoaded', function() {
-            // 获取所有按钮
+         
             const buttons = document.querySelectorAll('button, .choice-btn, .next-btn, .save-btn, .music-control');
             
-            // 为每个按钮添加点击事件监听器
+         
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
                     playClickSound();
                 });
             });
             
-            // 为可编辑的文本区域添加点击事件和自动保存功能
+     
             const editableElements = document.querySelectorAll('[contenteditable="true"]');
             editableElements.forEach(element => {
-                // 添加点击音效
+               
                 element.addEventListener('click', function() {
                     playClickSound();
                 });
                 
-                // 添加输入事件监听，实现自动保存
+              
                 element.addEventListener('input', function() {
-                    // 当内容改变时自动保存
-                    saveLetterContent(false); // false表示不显示提示
+                   
+                    saveLetterContent(false);
                 });
                 
-                // 添加失去焦点事件，确保编辑完成时保存
+            
                 element.addEventListener('blur', function() {
                     saveLetterContent(false);
                 });
@@ -701,12 +695,12 @@
                 alert('Content saved! 💌');
             }
             
-            // 这里可以添加保存到本地存储的代码
+          
             const letterGreeting = document.querySelector('.letter-greeting').innerText;
             const letterTexts = [...document.querySelectorAll('.letter-text')].map(el => el.innerText);
             const letterSignature = document.querySelector('.letter-signature').innerHTML;
             
-            // 保存到localStorage
+       
             localStorage.setItem('letterContent', JSON.stringify({
                 greeting: letterGreeting,
                 texts: letterTexts,
@@ -714,15 +708,15 @@
             }));
         }
         
-        // 加载保存的内容
+     
         function loadSavedContent() {
             const savedContent = localStorage.getItem('letterContent');
             
             if (savedContent) {
                 try {
                     const content = JSON.parse(savedContent);
-                    
-                    // 恢复内容
+              
+
                     document.querySelector('.letter-greeting').innerText = content.greeting;
                     
                     const textElements = document.querySelectorAll('.letter-text');
@@ -739,10 +733,10 @@
             }
         }
 
-        // 页面加载时尝试恢复保存的内容
+    
         window.addEventListener('DOMContentLoaded', loadSavedContent);
 
-        // Close modal when clicking outside
+      
         window.onclick = function(event) {
             const modal = document.getElementById('letterModal');
             if (event.target === modal) {
